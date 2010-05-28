@@ -1,19 +1,7 @@
--- phpMyAdmin SQL Dump
--- version 3.0.0
--- http://www.phpmyadmin.net
 --
--- Host: localhost
--- Generation Time: Apr 29, 2010 at 07:01 PM
--- Server version: 5.0.77
--- PHP Version: 5.2.9
+-- Generation Time: May 28, 2010 at 01:01 PM
 
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
-
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
 
 -- --------------------------------------------------------
 
@@ -22,23 +10,16 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 --
 
 CREATE TABLE IF NOT EXISTS `cycles` (
-  `id` int(11) NOT NULL auto_increment,
-  `title` varchar(100) default NULL,
+  `id` int(11) unsigned NOT NULL auto_increment,
+  `title` varchar(100) character set utf8 collate utf8_unicode_ci default NULL,
+  `autoplay` tinyint(1) unsigned NOT NULL default '1',
+  `loop` tinyint(1) unsigned NOT NULL default '1',
+  `delay` tinyint(4) unsigned NOT NULL default '5',
+  `background_hex` varchar(11) character set utf8 collate utf8_unicode_ci default '000000',
   `created` timestamp NULL default NULL,
   `updated` timestamp NOT NULL default '0000-00-00 00:00:00',
   PRIMARY KEY  (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `cycle_records_cycles`
---
-
-CREATE TABLE IF NOT EXISTS `cycle_records_cycles` (
-  `cycle_id` int(11) NOT NULL,
-  `cycle_record_id` int(11) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=8 ;
 
 -- --------------------------------------------------------
 
@@ -47,8 +28,13 @@ CREATE TABLE IF NOT EXISTS `cycle_records_cycles` (
 --
 
 CREATE TABLE IF NOT EXISTS `cycles_nodes` (
-  `cycle_id` int(11) NOT NULL,
-  `node_id` int(11) NOT NULL
+  `cycle_id` int(11) unsigned NOT NULL,
+  `node_id` int(11) unsigned NOT NULL,
+  `position` tinyint(2) unsigned NOT NULL default '1',
+  `style` varchar(100) character set utf8 collate utf8_unicode_ci NOT NULL default 'jquery_infinite_carousel',
+  `width` int(2) unsigned NOT NULL default '500',
+  `height` int(2) unsigned NOT NULL default '200',
+  KEY `node_id` (`node_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -58,13 +44,27 @@ CREATE TABLE IF NOT EXISTS `cycles_nodes` (
 --
 
 CREATE TABLE IF NOT EXISTS `cycle_records` (
-  `id` int(11) NOT NULL auto_increment,
-  `title` varchar(100) default NULL,
-  `caption` text,
-  `link` varchar(200) default NULL,
-  `path` varchar(255) default NULL,
-  `mime_type` varchar(50) default NULL,
+  `id` int(11) unsigned NOT NULL auto_increment,
+  `title` varchar(100) character set utf8 collate utf8_unicode_ci default NULL,
+  `caption` text character set utf8 collate utf8_unicode_ci,
+  `link` varchar(200) character set utf8 collate utf8_unicode_ci default NULL,
+  `path` varchar(255) character set utf8 collate utf8_unicode_ci default NULL,
+  `mime_type` varchar(50) character set utf8 collate utf8_unicode_ci default NULL,
   `created` timestamp NULL default NULL,
   `updated` timestamp NOT NULL default '0000-00-00 00:00:00',
   PRIMARY KEY  (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=28 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `cycle_records_cycles`
+--
+
+CREATE TABLE IF NOT EXISTS `cycle_records_cycles` (
+  `cycle_id` int(11) unsigned NOT NULL,
+  `cycle_record_id` int(11) unsigned NOT NULL,
+  KEY `cycle_id` (`cycle_id`),
+  KEY `cycle_record_id` (`cycle_record_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 ROW_FORMAT=FIXED;
+

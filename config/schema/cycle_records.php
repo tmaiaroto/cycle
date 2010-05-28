@@ -1,6 +1,6 @@
 <?php 
 /* SVN FILE: $Id$ */
-/* CycleRecords schema generated on: 2010-04-29 19:04:52 : 1272585652*/
+/* CycleRecords schema generated on: 2010-05-28 12:05:44 : 1275069524*/
 class CycleRecordsSchema extends CakeSchema {
 	var $name = 'CycleRecords';
 
@@ -22,4 +22,4 @@ class CycleRecordsSchema extends CakeSchema {
 		'updated' => array('type' => 'timestamp', 'null' => false, 'default' => '0000-00-00 00:00:00', 'length' => NULL)
 	);
 }
-?><!-- 0.168s -->
+?><!-- 0.568s -->
