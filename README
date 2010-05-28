@@ -1,0 +1,4 @@
+This is a plugin for the Croogo CMS built on CakePHP.
+It displays a series of records as "slides" in a "cycle" or "small 
+gallery." You can add more display styles and JavaScript plugins to 
+change how it looks very easily.
