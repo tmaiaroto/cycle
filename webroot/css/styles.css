@@ -1,0 +1,14 @@
+.node_cycles_expand_section_arrow {
+	float: left;
+	padding-top: 4px;
+}
+h3.node_cycles_title {	
+	text-decoration: none;
+	border-bottom: 1px solid #ccc;
+}
+a.node_cycles_title_link{	
+	text-decoration: none;
+}
+.node_cycles {
+	margin-top: 15px;
+}
