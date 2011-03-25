@@ -1,0 +1,10 @@
+name: Cycle
+description: Image Cycler
+
+author: tmaiaroto.
+authorUrl: https://github.com/tmaiaroto/cycle
+
+dependencies:
+  plugins:
+    - acl
+    - extensions
