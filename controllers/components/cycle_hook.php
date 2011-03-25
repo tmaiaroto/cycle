@@ -14,64 +14,6 @@ class CycleHookComponent extends Object {
 	var $components = array('Cycle.ImageVersion');
 	
 /**
- * Called after activating the hook in ExtensionsHooksController::admin_toggle()
- *
- * @param object $controller Controller
- * @return void
- */
-    function onActivate(&$controller) {
-        // ACL: set ACOs with permissions
-        $controller->Croogo->addAco('Cycle'); // the controller
-        $controller->Croogo->addAco('Cycle/admin_index');  // admin methods
-        $controller->Croogo->addAco('Cycle/admin_add');
-        $controller->Croogo->addAco('Cycle/admin_edit');
-        $controller->Croogo->addAco('Cycle/admin_delete');
-        $controller->Croogo->addAco('CycleRecord'); // the controller
-        $controller->Croogo->addAco('CycleRecord/admin_index');  // admin methods
-        $controller->Croogo->addAco('CycleRecord/admin_add');
-        $controller->Croogo->addAco('CycleRecord/admin_edit');
-        $controller->Croogo->addAco('CycleRecord/admin_delete');
-        
-        // Install the database tables we need
-        App::Import('CakeSchema');
-        $CakeSchema = new CakeSchema();
-        $db =& ConnectionManager::getDataSource('default');  // TODO: How do we change this for installs?
-        
-        // A list of schema files to import for this plugin to work
-        $schema_files = array(
-        	'cycles.php',
-        	'cycle_records.php',
-        	'cycle_records_cycles.php',
-        	'cycles_nodes.php'
-        );
-        foreach($schema_files as $schema_file) {
-        	$class_name = Inflector::camelize(substr($schema_file, 0, -4)).'Schema';
-        	$table_name = substr($schema_file, 0, -4);
-        	// Only build the tables if they don't already exist
-        	if(!in_array($table_name, $db->_sources)) {
-	        	include_once(APP.'plugins'.DS.'cycle'.DS.'config'.DS.'schema'.DS.$schema_file); // Can app import also work here?
-	        	$ActivateSchema = new $class_name;
-	        	$created = false;
-				if(isset($ActivateSchema->tables[$table_name])) {
-					$db->execute($db->createSchema($ActivateSchema, $table_name));
-				}
-			}
-        }
-        
-        
-    }
-/**
- * Called after deactivating the hook in ExtensionsHooksController::admin_toggle()
- *
- * @param object $controller Controller
- * @return void
- */
-    function onDeactivate(&$controller) {
-        // ACL: remove ACOs with permissions
-        $controller->Croogo->removeAco('Cycle');
-        $controller->Croogo->removeAco('CycleRecord');
-    }
-/**
  * Called after the Controller::beforeFilter() and before the controller action
  *
  * @param object $controller Controller with components to startup
@@ -79,7 +21,6 @@ class CycleHookComponent extends Object {
  */
     function startup(&$controller) {
     	$this->controller =& $controller;
-    	
     	// Add the Cycle behavior that will attach data to nodes for us
     	$this->controller->Node->Behaviors->attach('Cycle.Cycle');
     	// We need to bind the HABTM for Cycle here too along with the behavior - Why??

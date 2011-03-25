@@ -46,6 +46,7 @@
 				                'controller' => 'cycle_records',
 				                'action' => 'remove_from_cycle',
 				                $record['id'],
+												$this->data['Cycle']['id'],
 				                'token' => $this->params['_Token']['key'],
 				            ), null, __('Are you sure? This will not delete the cycle record, only the association to this cycle.', true));
 

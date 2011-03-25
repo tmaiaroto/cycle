@@ -21,7 +21,7 @@ class CycleHookHelper extends AppHelper {
         'Form',
         'Cycle.ImageVersion'
     );
-    
+
     function addFormSection() {    	
     	if((isset($this->Layout->View->viewVars['cycles'])) && (count($this->Layout->View->viewVars['cycles']) > 0)) {
 	   		$jsBlock = '$(document).ready(function() { '; // open

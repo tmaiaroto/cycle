@@ -80,6 +80,40 @@ class CycleRecordsController extends CycleAppController {
             $this->redirect(array('action'=>'index'));
         }
     }
+
+		function admin_remove_from_cycle($cycle_record_id,$cycle_id) {
+			if (!isset($this->params['named']['token']) || ($this->params['named']['token'] != $this->params['_Token']['key'])) {
+        $blackHoleCallback = $this->Security->blackHoleCallback;
+        $this->$blackHoleCallback();
+      }
+
+			$cycleRecordsCycleModel = ClassRegistry::init('Cycle.CycleRecordsCycle');
+			$cycleRecordsCycle = $cycleRecordsCycleModel->find(
+				'first',
+				array(
+					'conditions' => array(
+						'cycle_record_id' => $cycle_record_id,
+						'cycle_id' => $cycle_id
+					)
+				)
+			);
+			if (!empty($cycleRecordsCycle)) {
+				// clear cache
+				Cache::delete('cycle_records_'.$cycle_id); // the query cache
+        clearCache('cycle_'.$cycle_id, 'views', ''); // the view cache for the elements, they don't have .php extensions!            	
+				// delete
+				$cycleRecordsCycleModel->deleteAll(
+					array(
+						'cycle_record_id' => $cycle_record_id,
+						'cycle_id' => $cycle_id
+					)
+				);
+				$this->Session->setFlash(__('Cycle Record removed from Cycle',true));
+				$this->redirect(array('plugin'=>'cycle','controller'=>'cycles','action'=>'edit',$cycle_id,'#'=>'current_records'));
+			}
+			$this->Session->setFlash(__('Cycle Record not found',true));
+			$this->redirect(array('plugin'=>'cycle','controller'=>'cycles','action'=>'index'));
+		}
     
 }
 ?>
